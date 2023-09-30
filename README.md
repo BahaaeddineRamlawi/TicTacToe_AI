@@ -12,7 +12,7 @@ git clone https://github.com/BahaaeddineRamlawi/TicTacToe_AI.git
 ```
 Navigate to the project directory:
 ```
-cd tic-tac-toe-ai
+cd TicTacToe_AI-main
 ```
 
 ### Running the Game
