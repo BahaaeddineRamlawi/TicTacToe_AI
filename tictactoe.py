@@ -107,8 +107,6 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler):
                 "column": column,
                 "text": text
             }
-            # if text != '':  #if text not an empty string -> it's a tie or someone have won so we need to reset the game.
-            #     board = [[' ' for _ in range(3)] for _ in range(3)]
             print("response_data  ", response_data) # row and column chosen by the AI.
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
