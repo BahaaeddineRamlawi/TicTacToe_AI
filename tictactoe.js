@@ -8,7 +8,9 @@ resultBox = document.querySelector(".result-box"),
 wonText = resultBox.querySelector(".won-text"),
 replayBtn = resultBox.querySelector("button");
 
-cases = {1:[0,0],2:[0,1],3:[0,2],4:[1,0],5:[1,1],6:[1,2],7:[2,0],8:[2,1],9:[2,2]}
+cases = {1:[0,0],2:[0,1],3:[0,2],4:[1,0],5:[1,1],6:[1,2],7:[2,0],8:[2,1],9:[2,2]};
+let fontsarray = ['Caveat', 'Indie Flower','Gloria Hallelujah','Shadows Into Light','Fuggles'];
+
 
 window.onload = ()=>{ 
     for (let i = 0; i < allBox.length; i++) {
@@ -35,6 +37,8 @@ let playerSign = "X";
 function call_button_click(val,element) {
     row = cases[val][0];
     column = cases[val][1];
+    const key = getKeyByValue(cases, [row,column]);
+    changeStyle(`box${key}`);
     clickedBox(element);
     const inputData = {'row': row,'column': column}
     fetch('/send_data', {
@@ -49,7 +53,7 @@ function call_button_click(val,element) {
         row = data["row"];
         column = data["column"];
         text = data["text"];
-        let randomTimeDelay = ((Math.random() * 1000) + 200).toFixed();
+        let randomTimeDelay = ((Math.random() * 100) + 200).toFixed();
         setTimeout(()=>{
             bot(row, column);
         }, randomTimeDelay);
@@ -84,6 +88,7 @@ function bot(row,column){
     const key = getKeyByValue(cases, [row,column]) - 1;
     playerSign = "O";
     if(key >= 0 && key < 9){
+        changeStyle(`box${key+1}`);
         if(players.classList.contains("player")){ 
             playerSign = "X";
             allBox[key].innerHTML = `<i class="${playerXIcon}">X</i>`;
@@ -159,6 +164,12 @@ function resetGame() {
     .catch(error => {
         console.error('Error sending/receiving data:', error);
     });
+}
+
+function changeStyle(aclass){
+    var thefont = fontsarray[(Math.floor(Math.random() * fontsarray.length))]
+    console.log(thefont);
+    document.getElementsByClassName(aclass)[0].style.fontFamily = thefont;
 }
 
 replayBtn.onclick = ()=>{

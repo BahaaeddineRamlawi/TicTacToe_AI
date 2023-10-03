@@ -23,33 +23,56 @@ def check_winner(board):
     return 'Tie'
 
 def minimax(board, depth, is_max):
-    if check_winner(board) == 'X':
+    result = value(board)
+    if result is not None:
+        return result
+    if is_max:
+        return max_value(board, depth)
+    else:
+        return min_value(board, depth)
+
+def value(state):
+    result = check_winner(state)
+    if result == 'X':
         return -1
-    if check_winner(board) == 'O':
+    elif result == 'O':
         return 1
-    if check_winner(board) == 'Tie':
+    elif result == 'Tie':
         return 0
+    return None
+
+def minimax(board, depth, is_max):
+    result = value(board)
+    if result is not None:
+        return result
 
     if is_max:
-        max_eval = float('-inf')
-        for i in range(3):
-            for j in range(3):
-                if board[i][j] == ' ':
-                    board[i][j] = 'O'
-                    eval = minimax(board, depth + 1, False)
-                    board[i][j] = ' '
-                    max_eval = max(max_eval, eval)
-        return max_eval
+        return max_value(board,depth)
     else:
-        min_eval = float('inf')
-        for i in range(3):
-            for j in range(3):
-                if board[i][j] == ' ':
-                    board[i][j] = 'X'
-                    eval = minimax(board, depth + 1, True)
-                    board[i][j] = ' '
-                    min_eval = min(min_eval, eval)
-        return min_eval
+        return min_value(board,depth)
+
+def max_value(board,depth):
+    max_eval = float('-inf')
+    for i in range(3):
+        for j in range(3):
+            if board[i][j] == ' ':
+                board[i][j] = 'O'
+                eval = minimax(board, depth + 1, False)
+                board[i][j] = ' '
+                max_eval = max(max_eval, eval)
+    return max_eval
+
+def min_value(board,depth):
+    min_eval = float('inf')
+    for i in range(3):
+        for j in range(3):
+            if board[i][j] == ' ':
+                board[i][j] = 'X'
+                eval = minimax(board, depth + 1, True)
+                board[i][j] = ' '
+                min_eval = min(min_eval, eval)
+    return min_eval
+
 
 def best_move(board):
     max_eval = float('-inf')
@@ -85,7 +108,7 @@ def make_move(i, j):
             elif check_winner(board) == 'Tie':
                 return move,"Game Over, It's a tie!"
 
-class CustomHandler(http.server.SimpleHTTPRequestHandler):
+class CustomHandler(http.server.SimpleHTTPRequestHandler): #POST and GET APIs
     def do_GET(self):
         if self.path == '/':
             self.path = '/index.html'

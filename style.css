@@ -12,9 +12,15 @@ html{
 
 body{
   margin: 0px;
+  font-family: 'Shadows Into Light';
+  font-family: 'Gloria Hallelujah';
+  font-family: 'Fuggles';
+  font-family: 'Caveat';
+  font-family: 'Indie Flower';
   font-family: 'Philosopher', sans-serif;
   width: 100%;
   position: absolute;
+  min-height: 100vh;
 }
 
 header{
@@ -25,6 +31,28 @@ header img{
 height: 100px;
 width: 100px;
 margin: 0px 50px;
+}
+
+footer{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+footer div{
+  border: #fff 2px;
+  border-top-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  margin-bottom: 10px;
+  border-style: outset;
+}
+
+footer p{
+  padding: 10px;
+  padding-left: 20px;
+  color: #fff;
 }
 
 .tictactoegame{
@@ -175,7 +203,8 @@ margin: 0px 50px;
   width: 100px;
   margin: 2px;
   color: #5c5cb1;
-  font-size: 40px;
+  font-size: 60px;
+  font-weight: bold;
   line-height: 80px;
   text-align: center;
   border-radius: 5px;
