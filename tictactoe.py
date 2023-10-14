@@ -22,15 +22,6 @@ def check_winner(board):
         return None
     return 'Tie'
 
-def minimax(board, depth, is_max):
-    result = value(board)
-    if result is not None:
-        return result
-    if is_max:
-        return max_value(board, depth)
-    else:
-        return min_value(board, depth)
-
 def value(state):
     result = check_winner(state)
     if result == 'X':
@@ -41,37 +32,44 @@ def value(state):
         return 0
     return None
 
-def minimax(board, depth, is_max):
+def minimax(board, depth, is_max, alpha, beta):
     result = value(board)
     if result is not None:
         return result
 
     if is_max:
-        return max_value(board,depth)
+        return max_value(board, depth, alpha, beta)
     else:
-        return min_value(board,depth)
+        return min_value(board, depth, alpha, beta)
 
-def max_value(board,depth):
+def max_value(board, depth, alpha, beta):
     max_eval = float('-inf')
     for i in range(3):
         for j in range(3):
             if board[i][j] == ' ':
                 board[i][j] = 'O'
-                eval = minimax(board, depth + 1, False)
+                eval = minimax(board, depth + 1, False, alpha, beta)
                 board[i][j] = ' '
                 max_eval = max(max_eval, eval)
+                if eval >= beta:
+                    return eval
+                alpha = max(alpha, eval)
     return max_eval
 
-def min_value(board,depth):
+def min_value(board, depth, alpha, beta):
     min_eval = float('inf')
     for i in range(3):
         for j in range(3):
             if board[i][j] == ' ':
                 board[i][j] = 'X'
-                eval = minimax(board, depth + 1, True)
+                eval = minimax(board, depth + 1, True, alpha, beta)
                 board[i][j] = ' '
                 min_eval = min(min_eval, eval)
+                if eval <= alpha:
+                    return eval
+                beta = min(beta, eval)
     return min_eval
+
 
 
 def best_move(board):
@@ -81,7 +79,7 @@ def best_move(board):
         for j in range(3):
             if board[i][j] == ' ':
                 board[i][j] = 'O'
-                eval = minimax(board, 0, False)
+                eval = minimax(board, 0, False, float('-inf'), float('inf'))
                 board[i][j] = ' '
                 if eval > max_eval:
                     max_eval = eval

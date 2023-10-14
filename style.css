@@ -1,39 +1,44 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html{
+html {
   height: 100%;
-  background-image: linear-gradient(rgba(92, 92, 177,0.2),rgba(244, 106, 231,.1),rgba(244, 106, 231,.3)),url(Png/background.png);
+  background-image: linear-gradient(
+      rgba(92, 92, 177, 0.2),
+      rgba(244, 106, 231, 0.1),
+      rgba(244, 106, 231, 0.3)
+    ),
+    url(Png/background.png);
   background-attachment: fixed;
 }
 
-body{
+body {
   margin: 0px;
-  font-family: 'Shadows Into Light';
-  font-family: 'Gloria Hallelujah';
-  font-family: 'Fuggles';
-  font-family: 'Caveat';
-  font-family: 'Indie Flower';
-  font-family: 'Philosopher', sans-serif;
+  font-family: "Shadows Into Light";
+  font-family: "Gloria Hallelujah";
+  font-family: "Fuggles";
+  font-family: "Caveat";
+  font-family: "Indie Flower";
+  font-family: "Philosopher", sans-serif;
   width: 100%;
   position: absolute;
   min-height: 100vh;
 }
 
-header{
+header {
   padding: 20px 0;
 }
 
-header img{
-height: 100px;
-width: 100px;
-margin: 0px 50px;
+header img {
+  height: 100px;
+  width: 100px;
+  margin: 0px 50px;
 }
 
-footer{
+footer {
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -41,7 +46,7 @@ footer{
   justify-content: center;
 }
 
-footer div{
+footer div {
   border: #fff 2px;
   border-top-left-radius: 20px;
   border-bottom-right-radius: 20px;
@@ -49,48 +54,50 @@ footer div{
   border-style: outset;
 }
 
-footer p{
+footer p {
   padding: 10px;
   padding-left: 20px;
   color: #fff;
 }
 
-.tictactoegame{
+.tictactoegame {
   display: flex;
   justify-content: center;
 }
 
-
-.select-box, .play-board, .result-box{
+.select-box,
+.play-board,
+.result-box {
   transition: all 0.3s ease;
 }
-.select-box{
+.select-box {
   background: #fff;
   padding: 20px 25px 25px;
   border-radius: 5px;
   max-width: 400px;
   width: 100%;
 }
-.select-box.hide{
+.select-box.hide {
   display: none;
   pointer-events: none;
 }
-.select-box header{
+.select-box header {
   font-size: 30px;
   font-weight: 600;
   padding-bottom: 10px;
   border-bottom: 1px solid lightgrey;
 }
-.select-box .title{
+.select-box .title {
   font-size: 22px;
   font-weight: 500;
   margin: 20px 0;
 }
-.select-box .options{
+.select-box .options {
   display: flex;
   width: 100%;
 }
-.options button{
+
+.options button {
   width: 100%;
   font-size: 20px;
   font-weight: 500;
@@ -104,49 +111,49 @@ footer p{
   transition: all 0.3s ease;
 }
 .options button:hover,
-.btn button:hover{
+.btn button:hover {
   transform: scale(0.96);
 }
-.options button.playerX{
+.options button.playerX {
   margin-right: 5px;
 }
-.options button.playerO{
+.options button.playerO {
   margin-left: 5px;
 }
-.select-box .credit{
+.select-box .credit {
   text-align: center;
   margin-top: 20px;
   font-size: 18px;
   font-weight: 500;
 }
-.select-box .credit a{
+.select-box .credit a {
   color: #5c5cb1;
   text-decoration: none;
 }
-.select-box .credit a:hover{
+.select-box .credit a:hover {
   text-decoration: underline;
 }
 
-.play-board{
+.play-board {
   display: none;
   pointer-events: none;
 }
-.play-board.show{
+.play-board.show {
   display: block;
   pointer-events: auto;
 }
-.play-board .details{
+.play-board .details {
   padding: 7px;
   border-radius: 5px;
   background: #fff;
 }
-.play-board .players{
+.play-board .players {
   width: 100%;
   display: flex;
   position: relative;
   justify-content: space-between;
 }
-.players span{
+.players span {
   position: relative;
   z-index: 2;
   color: #5c5cb1;
@@ -159,16 +166,16 @@ footer p{
   user-select: none;
   transition: all 0.3 ease;
 }
-.players.active span:first-child{
+.players.active span:first-child {
   color: #fff;
 }
-.players.active span:last-child{
+.players.active span:last-child {
   color: #5c5cb1;
 }
-.players span:first-child{
+.players span:first-child {
   color: #fff;
 }
-.players .slider{
+.players .slider {
   position: absolute;
   top: 0;
   left: 0;
@@ -178,26 +185,26 @@ footer p{
   border-radius: 5px;
   transition: all 0.3s ease;
 }
-.players.active .slider{
+.players.active .slider {
   left: 50%;
 }
-.players.active span:first-child{
+.players.active span:first-child {
   color: #5c5cb1;
 }
-.players.active span:nth-child(2){
+.players.active span:nth-child(2) {
   color: #fff;
 }
-.players.active .slider{
+.players.active .slider {
   left: 50%;
 }
-.play-area{
+.play-area {
   margin-top: 20px;
 }
-.play-area section{
+.play-area section {
   display: flex;
   margin-bottom: 1px;
 }
-.play-area section span{
+.play-area section span {
   display: grid;
   height: 100px;
   width: 100px;
@@ -212,7 +219,7 @@ footer p{
   align-items: center;
 }
 
-.result-box{
+.result-box {
   padding: 25px 20px;
   border-radius: 5px;
   max-width: 400px;
@@ -222,27 +229,27 @@ footer p{
   background: #fff;
   pointer-events: none;
 }
-.result-box.show{
+.result-box.show {
   display: block;
   pointer-events: auto;
 }
-.result-box .won-text{
+.result-box .won-text {
   font-size: 30px;
   font-weight: 500;
   display: flex;
   justify-content: center;
 }
-.result-box .won-text p{
+.result-box .won-text p {
   font-weight: 600;
   margin: 0 5px;
 }
-.result-box .btn{
+.result-box .btn {
   width: 100%;
   margin-top: 25px;
   display: flex;
   justify-content: center;
 }
-.btn button{
+.btn button {
   font-size: 18px;
   font-weight: 500;
   padding: 8px 20px;
