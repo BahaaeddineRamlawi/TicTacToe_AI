@@ -5,8 +5,12 @@ const selectBox = document.querySelector(".select-box"),
   players = document.querySelector(".players"),
   allBox = document.querySelectorAll("section span"),
   resultBox = document.querySelector(".result-box"),
+  reviewBox = document.querySelector(".review-box"),
   wonText = resultBox.querySelector(".won-text"),
-  replayBtn = resultBox.querySelector("button");
+  replayBtn = resultBox.querySelector(".btn"),
+  replayBtn2 = reviewBox.querySelector(".btn");
+
+let counter = 1;
 
 cases = {
   1: [0, 0],
@@ -18,7 +22,9 @@ cases = {
   7: [2, 0],
   8: [2, 1],
   9: [2, 2],
+  10: [3, 3],
 };
+
 let fontsarray = [
   "Caveat",
   "Indie Flower",
@@ -26,11 +32,14 @@ let fontsarray = [
   "Shadows Into Light",
 ];
 
+let playerXIcon = "X";
+let playerOIcon = "O";
+let playerSign = "X";
+
 window.onload = () => {
   for (let i = 0; i < allBox.length; i++) {
     allBox[i].setAttribute("onclick", `call_button_click(${i + 1},this)`);
   }
-  resetGame();
 };
 
 selectBtnX.onclick = () => {
@@ -42,11 +51,8 @@ selectBtnO.onclick = () => {
   selectBox.classList.add("hide");
   playBoard.classList.add("show");
   players.setAttribute("class", "players active player");
+  playerSign = "O";
 };
-
-let playerXIcon = "X";
-let playerOIcon = "O";
-let playerSign = "X";
 
 function call_button_click(val, element) {
   row = cases[val][0];
@@ -67,14 +73,15 @@ function call_button_click(val, element) {
       row = data["row"];
       column = data["column"];
       text = data["text"];
-      let randomTimeDelay = (Math.random() * 100 + 200).toFixed();
+      box = data["box"];
+      const key = getKeyByValue(cases, [row, column]);
       setTimeout(() => {
-        bot(row, column);
-      }, randomTimeDelay);
+        bot(key);
+      }, 250);
       if (text !== "") {
         setTimeout(() => {
-          gameEnded(text);
-        }, randomTimeDelay);
+          gameEnded(text, box);
+        }, 250);
       }
     })
     .catch((error) => {
@@ -83,38 +90,40 @@ function call_button_click(val, element) {
 }
 
 function clickedBox(element) {
+  const box = element.getAttribute("class");
+  const lastChar = box.charAt(box.length - 1);
+  [row, column] = cases[lastChar]; // Get the row and column of the player
+  addText(counter + "- You -> row: " + row + " column: " + column, "p"); // Game review
   if (players.classList.contains("player")) {
     playerSign = "O";
     element.innerHTML = `<i class="${playerOIcon}">O</i>`;
     players.classList.remove("active");
-    element.setAttribute("id", playerSign);
   } else {
     element.innerHTML = `<i class="${playerXIcon}">X</i>`;
     players.classList.add("active");
-    element.setAttribute("id", playerSign);
   }
   element.style.pointerEvents = "none";
   playBoard.style.pointerEvents = "none";
+  counter++;
 }
 
-function bot(row, column) {
-  const key = getKeyByValue(cases, [row, column]) - 1;
-  playerSign = "O";
-  if (key >= 0 && key < 9) {
-    changeStyle(`box${key + 1}`);
+function bot(key) {
+  if (key <= 9) {
+    addText(counter + "- AI -> row: " + row + " column: " + column, "p"); //Game Review
+    playerSign = "O";
+    changeStyle(`box${key}`);
     if (players.classList.contains("player")) {
       playerSign = "X";
-      allBox[key].innerHTML = `<i class="${playerXIcon}">X</i>`;
-      allBox[key].setAttribute("id", playerSign);
+      allBox[key - 1].innerHTML = `<i class="${playerXIcon}">X</i>`;
       players.classList.add("active");
     } else {
-      allBox[key].innerHTML = `<i class="${playerOIcon}">O</i>`;
+      allBox[key - 1].innerHTML = `<i class="${playerOIcon}">O</i>`;
       players.classList.remove("active");
-      allBox[key].setAttribute("id", playerSign);
     }
-    allBox[key].style.pointerEvents = "none";
+    allBox[key - 1].style.pointerEvents = "none";
     playBoard.style.pointerEvents = "auto";
     playerSign = "X";
+    counter++;
   }
 }
 
@@ -142,25 +151,24 @@ function arraysAreEqual(arr1, arr2) {
   return true;
 }
 
-function gameEnded(text) {
-  if (text === "Game Over, You lose!") {
-    setTimeout(() => {
-      resultBox.classList.add("show");
-      playBoard.classList.remove("show");
-    }, 700);
-    wonText.innerHTML = `AI won the game!`;
-  } else if (text === "Game Over, You win!") {
-    setTimeout(() => {
-      resultBox.classList.add("show");
-      playBoard.classList.remove("show");
-    }, 700);
-    wonText.innerHTML = `You won the game!`;
+function gameEnded(text, box) {
+  b0 = box[0];
+  b1 = box[1];
+  b2 = box[2];
+  const key0 = getKeyByValue(cases, [b0[0], b0[1]]);
+  const key1 = getKeyByValue(cases, [b1[0], b1[1]]);
+  const key2 = getKeyByValue(cases, [b2[0], b2[1]]);
+  if (text === "AI won the game!") {
+    endingCermony(key0, key1, key2, text);
+  } else if (text === "You won the game!") {
+    endingCermony(key0, key1, key2, text);
   } else {
     setTimeout(() => {
       resultBox.classList.add("show");
       playBoard.classList.remove("show");
     }, 700);
     wonText.textContent = "Match has been drawn!";
+    addText("Match has been drawn!");
   }
 }
 
@@ -181,8 +189,50 @@ function changeStyle(aclass) {
   document.getElementsByClassName(aclass)[0].style.fontFamily = thefont;
 }
 
+function setBackgroundStyles(className) {
+  const element = document.getElementsByClassName(className)[0];
+  element.style.background = "#5c5cb1";
+  element.style.color = "#fff";
+}
+
+function endingCermony(key0, key1, key2, text) {
+  // Change Background color for winner and showing the result
+  setTimeout(() => {
+    setBackgroundStyles(`box${key0}`);
+  }, 100);
+  setTimeout(() => {
+    setBackgroundStyles(`box${key1}`);
+  }, 400);
+  setTimeout(() => {
+    setBackgroundStyles(`box${key2}`);
+  }, 700);
+  setTimeout(() => {
+    resultBox.classList.add("show");
+    playBoard.classList.remove("show");
+  }, 1000);
+  wonText.innerHTML = text;
+  addText(text); // Game Review
+}
+
+function showReview() {
+  resultBox.classList.remove("show");
+  reviewBox.classList.add("show");
+}
+
+function addText(text, type = "h3") {
+  const context = document.createElement(type);
+  context.textContent = text;
+  const targetElement = document.querySelector(".review-box");
+  targetElement.appendChild(context);
+}
+
 replayBtn.onclick = () => {
-  console.log("Game is Reseting");
+  window.location.reload();
+  resetGame();
+};
+
+replayBtn2.onclick = () => {
+  addText("Game is Reseting", "p");
   window.location.reload();
   resetGame();
 };

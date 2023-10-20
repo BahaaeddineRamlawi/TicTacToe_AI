@@ -1,71 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Philosopher&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fuggles&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fuggles&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Philosopher&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Fuggles&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Fuggles&display=swap" rel="stylesheet"/>
     <title>Tic Tac Toe</title>
-    <link rel="icon" type="image/png" href="Png/logo.png">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header>
-    <img src="Png/logo.png">
-  </header>
-  <div class="tictactoegame">
-    <div class="select-box">
-      <header>Tic Tac Toe</header>
-      <div class="content">
-        <div class="title">Select which you want to be?</div>
-        <div class="options">
-          <button class="playerX">Player (X)</button>
-          <button class="playerO">Player (O)</button>
+    <link rel="icon" type="image/png" href="Png/logo.png" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <a href="index.html"><img src="Png/logo.png" /></a>
+    </header>
+    <div class="tictactoegame">
+      <div class="select-box">
+        <top>Tic Tac Toe</top>
+        <div class="content">
+          <div class="title">Select which you want to be?</div>
+          <div class="options">
+            <button class="playerX">Player (X)</button>
+            <button class="playerO">Player (O)</button>
+          </div>
         </div>
       </div>
-    </div> 
-    <div class="play-board">
-      <div class="details">
-        <div class="players">
-          <span class="Xturn">X's Turn</span>
-          <span class="Oturn">O's Turn</span>
-          <div class="slider"></div>
+      <div class="play-board">
+        <div class="details">
+          <div class="players">
+            <span class="Xturn">X's Turn</span>
+            <span class="Oturn">O's Turn</span>
+            <div class="slider"></div>
+          </div>
+        </div>
+        <div class="play-area">
+          <section>
+            <span class="box1"></span>
+            <span class="box2"></span>
+            <span class="box3"></span>
+          </section>
+          <section>
+            <span class="box4"></span>
+            <span class="box5"></span>
+            <span class="box6"></span>
+          </section>
+          <section>
+            <span class="box7"></span>
+            <span class="box8"></span>
+            <span class="box9"></span>
+          </section>
         </div>
       </div>
-      <div class="play-area">
-        <section>
-          <span class="box1"></span>
-          <span class="box2"></span>
-          <span class="box3"></span>
-        </section>
-        <section>
-          <span class="box4"></span>
-          <span class="box5"></span>
-          <span class="box6"></span>
-        </section>
-        <section>
-          <span class="box7"></span>
-          <span class="box8"></span>
-          <span class="box9"></span>
-        </section>
+      <div class="result-box">
+        <div class="won-text"></div>
+        <div class="btn"><button>Replay</button></div>
+        <div class="review"><button onclick="showReview()">Game Review</button></div>
+      </div>
+      <div class="review-box">
+        <div class="btn"><button>Replay</button></div>
       </div>
     </div>
-    <div class="result-box">
-      <div class="won-text"></div>
-      <div class="btn"><button>Replay</button></div>
-    </div>
-  </div>
-  <script src="tictactoe.js"></script>
-  <footer>
-    <div>
-      <p>Made by: Hajar Kattaa - Ahmad Chaachouh - Bahaaeddine Ramlawi</p>
-  </div>
-  </footer>
-</body>
+    <script src="tictactoe.js"></script>
+    <footer>
+      <div>
+        <p>Made by: Hajar Kattaa - Ahmad Chaachouh - Bahaaeddine Ramlawi</p>
+      </div>
+    </footer>
+  </body>
 </html>

@@ -6,24 +6,25 @@ from urllib.parse import parse_qs
 
 PORT = 8080
 board = [[' ' for _ in range(3)] for _ in range(3)]
+counter = 1;
 
 def check_winner(board):
-    for row in board:
-        if row[0] == row[1] == row[2] != ' ':
-            return row[0]
+    for row in range(3):
+        if board[row][0] == board[row][1] == board[row][2] != ' ':
+            return (board[row][0],[(row,0),(row,1),(row,2)])
     for col in range(3):
         if board[0][col] == board[1][col] == board[2][col] != ' ':
-            return board[0][col]
+            return (board[0][col],[(0,col),(1,col),(2,col)])
     if board[0][0] == board[1][1] == board[2][2] != ' ':
-        return board[0][0]
+        return (board[0][0],[(0,0),(1,1),(2,2)])
     if board[0][2] == board[1][1] == board[2][0] != ' ':
-        return board[0][2]
+        return (board[0][2],[(0,2),(1,1),(2,0)])
     if any(' ' in row for row in board):
-        return None
-    return 'Tie'
+        return (None, None)
+    return ('Tie',[(0,0),(0,0),(0,0)])
 
 def value(state):
-    result = check_winner(state)
+    result,_ = check_winner(state)
     if result == 'X':
         return -1
     elif result == 'O':
@@ -43,7 +44,7 @@ def minimax(board, depth, is_max, alpha, beta):
         return min_value(board, depth, alpha, beta)
 
 def max_value(board, depth, alpha, beta):
-    max_eval = float('-inf')
+    max_eval = -2
     for i in range(3):
         for j in range(3):
             if board[i][j] == ' ':
@@ -57,7 +58,7 @@ def max_value(board, depth, alpha, beta):
     return max_eval
 
 def min_value(board, depth, alpha, beta):
-    min_eval = float('inf')
+    min_eval = 2
     for i in range(3):
         for j in range(3):
             if board[i][j] == ' ':
@@ -73,13 +74,13 @@ def min_value(board, depth, alpha, beta):
 
 
 def best_move(board):
-    max_eval = float('-inf')
+    max_eval = -2
     move = None
     for i in range(3):
         for j in range(3):
             if board[i][j] == ' ':
                 board[i][j] = 'O'
-                eval = minimax(board, 0, False, float('-inf'), float('inf'))
+                eval = minimax(board, 0, False, -2, 2)
                 board[i][j] = ' '
                 if eval > max_eval:
                     max_eval = eval
@@ -90,21 +91,23 @@ def make_move(i, j):
     if board[i][j] == ' ':
         board[i][j] = 'X'
         move = (3,3)
-        if check_winner(board) is None:
+        result,box = check_winner(board)
+        if result is None:
             move = best_move(board)
             if move is not None:
                 i, j = move
                 board[i][j] = 'O'
-            if check_winner(board) == 'O':
-                return move,"Game Over, You lose!"
-            elif check_winner(board) == 'Tie':
-                return move,"Game Over, It's a tie!"
-            return move,""
+            result,box = check_winner(board)
+            if result == 'O':
+                return move,"AI won the game!",box
+            elif result == 'Tie':
+                return move,"Game Over, It's a tie!",box
+            return move,"",box
         else:
-            if check_winner(board) == 'X':
-                return move,"Game Over, You win!"
-            elif check_winner(board) == 'Tie':
-                return move,"Game Over, It's a tie!"
+            if result == 'X':
+                return move,"You won the game!",box
+            elif result == 'Tie':
+                return move,"Game Over, It's a tie!",box
 
 class CustomHandler(http.server.SimpleHTTPRequestHandler): #POST and GET APIs
     def do_GET(self):
@@ -113,22 +116,30 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler): #POST and GET APIs
         super().do_GET()
 
     def do_POST(self):
-        global board
+        global board,counter
         if self.path == '/send_data':
             content_length = int(self.headers['Content-Length'])
             post_data = self.rfile.read(content_length)
             data = json.loads(post_data.decode())
             input_data = data.get('data', '')
-            print("input_data  ",input_data)  # row and column chosen by the player.
+            print("-----------------------------------------")
+            print("|",counter,"- You ->  ",input_data," |")  # row and column chosen by the player.
+            counter += 1
             returndata = make_move(input_data.get('row'), input_data.get('column'))
-            (move, text) = returndata
+            (move, text, box) = returndata
             (row, column) = move
             response_data = {
                 "row": row,
                 "column": column,
-                "text": text
+                "text": text,
+                "box": box
             }
-            print("response_data  ", response_data) # row and column chosen by the AI.
+            if counter < 9:
+                print("|",counter,"- AI  ->  ", {"row":row,"column":column}," |") # row and column chosen by the AI.
+                print("-----------------------------------------")
+                counter += 1
+            else:
+                print("-----------------------------------------")
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
             self.end_headers()
@@ -139,12 +150,13 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler): #POST and GET APIs
             self.send_error(404)
     
     def reset_game(self):
-        global board
+        global board,counter
         board = [[' ' for _ in range(3)] for _ in range(3)]
+        counter = 1
         response_data = {
             "message": "Game reset successfully"
         }
-        print("response_data", response_data)
+        print("Reset:  ->  ", response_data["message"])
         self.send_response(200)
         self.send_header('Content-type', 'application/json')
         self.end_headers()
