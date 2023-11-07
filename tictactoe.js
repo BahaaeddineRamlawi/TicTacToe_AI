@@ -60,6 +60,7 @@ selectBtnO.onclick = () => {
 };
 
 function call_button_click(val, element) {
+  element.setAttribute("onclick", "");
   row = cases[val][0];
   column = cases[val][1];
   const key = getKeyByValue(cases, [row, column]);
@@ -157,6 +158,9 @@ function arraysAreEqual(arr1, arr2) {
 }
 
 function gameEnded(text, box) {
+  for (let i = 0; i < allBox.length; i++) {
+    allBox[i].setAttribute("onclick", "");
+  }
   b0 = box[0];
   b1 = box[1];
   b2 = box[2];
