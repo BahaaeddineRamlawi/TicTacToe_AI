@@ -101,6 +101,25 @@ footer p {
   display: flex;
   width: 100%;
 }
+.select-box .difficulty {
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.difficulty button {
+  font-size: 20px;
+  font-weight: 500;
+  padding: 10px 15px;
+  border: none;
+  background: rgba(244, 106, 231);
+  border-radius: 5px;
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
 
 .options button {
   width: 100%;
@@ -116,6 +135,7 @@ footer p {
   transition: all 0.3s ease;
 }
 .options button:hover,
+.difficulty button:hover,
 .btn button:hover {
   transform: scale(0.96);
 }
@@ -125,6 +145,13 @@ footer p {
 .options button.playerO {
   margin-left: 5px;
 }
+
+.difficulty button:disabled {
+  background-color: rgb(151, 55, 141);
+  transition: none;
+  transform: none;
+}
+
 .select-box .credit {
   text-align: center;
   margin-top: 20px;

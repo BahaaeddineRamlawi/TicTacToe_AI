@@ -12,6 +12,8 @@ const selectBox = document.querySelector(".select-box"),
 
 let counter = 1;
 
+let difficulty = "Impossible";
+
 cases = {
   1: [0, 0],
   2: [0, 1],
@@ -40,11 +42,13 @@ window.onload = () => {
   for (let i = 0; i < allBox.length; i++) {
     allBox[i].setAttribute("onclick", `call_button_click(${i + 1},this)`);
   }
+  resetGame();
 };
 
 selectBtnX.onclick = () => {
   selectBox.classList.add("hide");
   playBoard.classList.add("show");
+  start_game();
 };
 
 selectBtnO.onclick = () => {
@@ -52,6 +56,7 @@ selectBtnO.onclick = () => {
   playBoard.classList.add("show");
   players.setAttribute("class", "players active player");
   playerSign = "O";
+  start_game();
 };
 
 function call_button_click(val, element) {
@@ -219,11 +224,38 @@ function showReview() {
   reviewBox.classList.add("show");
 }
 
-function addText(text, type = "h3") {
+function addText(text, type = "h3", before = true) {
   const context = document.createElement(type);
   context.textContent = text;
   const targetElement = document.querySelector(".review-box");
-  targetElement.appendChild(context);
+  if (before) {
+    const firstChild = targetElement.querySelector(".review-box .btn");
+    targetElement.insertBefore(context, firstChild);
+  } else {
+    targetElement.appendChild(context);
+  }
+}
+
+function disablebutton(buttonNumber, diff) {
+  document.getElementById("button1").disabled = false;
+  document.getElementById("button2").disabled = false;
+  document.getElementById("button3").disabled = false;
+  document.getElementById("button" + buttonNumber).disabled = true;
+  difficulty = diff;
+}
+
+function start_game() {
+  let diff = difficulty;
+  addText("Difficulity is: " + diff);
+  fetch("/set_difficulity", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ data: diff }),
+  }).catch((error) => {
+    console.error("Error sending/receiving data:", error);
+  });
 }
 
 replayBtn.onclick = () => {
@@ -232,7 +264,7 @@ replayBtn.onclick = () => {
 };
 
 replayBtn2.onclick = () => {
-  addText("Game is Reseting", "p");
+  addText("Game is Reseting", "p", false);
   window.location.reload();
   resetGame();
 };

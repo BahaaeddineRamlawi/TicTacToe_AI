@@ -4,13 +4,10 @@
     <meta charset="UTF-8" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Philosopher&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Fuggles&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Fuggles&display=swap" rel="stylesheet"/>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Fuggles&family=Gloria+Hallelujah&family=Indie+Flower&family=Philosopher&family=Shadows+Into+Light&display=swap"
+      rel="stylesheet"
+    />
     <title>Tic Tac Toe</title>
     <link rel="icon" type="image/png" href="Png/logo.png" />
     <link rel="stylesheet" href="style.css" />
@@ -27,6 +24,11 @@
           <div class="options">
             <button class="playerX">Player (X)</button>
             <button class="playerO">Player (O)</button>
+          </div>
+          <div class="difficulty">
+            <button class="Easy" id="button1"  onclick="disablebutton(1,'Easy')">Easy</button>
+            <button class="Medium" id="button2" onclick="disablebutton(2,'Medium')">Medium</button>
+            <button class="Impossible" id="button3" disabled onclick="disablebutton(3,'Impossible')">Impossible</button>
           </div>
         </div>
       </div>
@@ -59,7 +61,9 @@
       <div class="result-box">
         <div class="won-text"></div>
         <div class="btn"><button>Replay</button></div>
-        <div class="review"><button onclick="showReview()">Game Review</button></div>
+        <div class="review">
+          <button onclick="showReview()">Game Review</button>
+        </div>
       </div>
       <div class="review-box">
         <div class="btn"><button>Replay</button></div>
