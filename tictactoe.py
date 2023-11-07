@@ -135,7 +135,6 @@ def best_move(board):
                     board[i][j] = 'O'
                     eval = minimax(board, 0, False, -float('inf'), float('inf'))
                     board[i][j] = ' '
-                    # print("eval: i=",i," j=",j,"-->", eval)
                     if eval > max_eval:
                         max_eval = eval
                         optimal_moves = [(i, j)]

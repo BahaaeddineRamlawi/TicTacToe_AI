@@ -30,7 +30,7 @@ body {
 
 header {
   padding: 20px 0;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 
 header a {
@@ -49,6 +49,15 @@ footer {
   width: 100%;
   display: flex;
   justify-content: center;
+  text-align: center;
+}
+
+footer a {
+  color: #fff;
+}
+
+#github {
+  font-size: 15px;
 }
 
 footer div {
