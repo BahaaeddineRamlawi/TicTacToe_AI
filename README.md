@@ -40,7 +40,6 @@ Enjoy playing Tic-Tac-Toe against the AI and see if you can beat it!
 
 #### Credits
 
-Made by
-> Bahaaeddine Ramlawi
-> Ahmad Chaachouh
+> Bahaaeddine Ramlawi <br />
+> Ahmad Chaachouh <br />
 > Hajar Kattaa
