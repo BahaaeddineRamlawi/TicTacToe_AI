@@ -13,6 +13,7 @@ board = [[' ' for _ in range(3)] for _ in range(3)]
 counter = 1
 max_depth = 9
 randomiser = False
+alphabeta = True
 
 ############  Evaluation Function  ############
 def evaluate(board):
@@ -94,6 +95,7 @@ def minimax(board, depth, is_max, alpha, beta):
 
 ############  Maximizing Functions  ############
 def max_value(board, depth, alpha, beta):
+    global alphabeta
     max_eval = -float('inf')
     for i in range(3):
         for j in range(3):
@@ -105,13 +107,15 @@ def max_value(board, depth, alpha, beta):
                     eval = minimax(board, depth + 1, False, alpha, beta)
                 board[i][j] = ' '
                 max_eval = max(max_eval, eval)
-                if eval >= beta:
-                    return eval
-                alpha = max(alpha, eval)
+                if alphabeta:
+                    if eval >= beta:
+                        return eval
+                    alpha = max(alpha, eval)
     return max_eval
 
 ############  Minimizing Functions  ############
 def min_value(board, depth, alpha, beta):
+    global alphabeta
     min_eval = float('inf')
     for i in range(3):
         for j in range(3):
@@ -123,28 +127,31 @@ def min_value(board, depth, alpha, beta):
                     eval = minimax(board, depth + 1, True, alpha, beta)
                 board[i][j] = ' '
                 min_eval = min(min_eval, eval)
-                if eval <= alpha:
-                    return eval
-                beta = min(beta, eval)
+                if alphabeta:
+                    if eval <= alpha:
+                        return eval
+                    beta = min(beta, eval)
     return min_eval
 
 ############  AI Move  ############
-def best_move(board):
+def best_move(board,depth = 0,alpha = -100,beta = 100):
     if not randomiser:
         max_eval = -float('inf')
-        optimal_moves = []
+        optimal_moves = None
         for i in range(3):
             for j in range(3):
                 if board[i][j] == ' ':
                     board[i][j] = 'O'
-                    eval = minimax(board, 0, False, -float('inf'), float('inf'))
+                    eval = minimax(board, depth, False, alpha, beta)
                     board[i][j] = ' '
                     if eval > max_eval:
                         max_eval = eval
-                        optimal_moves = [(i, j)]
-                    elif eval == max_eval:
-                        optimal_moves.append((i, j))    
-        return random.choice(optimal_moves)
+                        optimal_moves = (i, j)
+                    if alphabeta:
+                        if eval >= beta:
+                            return optimal_moves
+                        alpha = max(alpha, eval)
+        return optimal_moves
     else:
         available_moves = [(row, col) for row in range(3) for col in range(3) if board[row][col] == " "]
         if available_moves:
@@ -213,12 +220,15 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler): #POST and GET
             self.wfile.write(json.dumps(response_data).encode())
         elif self.path == '/reset_game':
             self.reset_game()
-        elif self.path == '/set_difficulity':
+        elif self.path == '/set_difficulty':
             content_length = int(self.headers['Content-Length'])
             post_data = self.rfile.read(content_length)
             data = json.loads(post_data.decode())
             input_data = data.get('data', '')
-            self.set_difficulity(input_data)
+            difficulty = input_data.get('difficulty')
+            alphabeta = input_data.get('alphabeta')
+            self.set_difficulty(difficulty)
+            self.set_pruning(alphabeta)
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
             self.end_headers()
@@ -240,10 +250,10 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler): #POST and GET
         self.end_headers()
         self.wfile.write(json.dumps(response_data).encode())
     
-    ############  Set Difficulity  ############
-    def set_difficulity(self,diff):
+    ############  Set Difficulty  ############
+    def set_difficulty(self,diff):
         global max_depth,randomiser
-        print("Set Difficulity: -> ", diff )
+        print("Set Difficulty: -> ", diff )
         if diff == 'Impossible':
             max_depth = 9
             randomiser = False
@@ -252,6 +262,15 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler): #POST and GET
             randomiser = False
         else:
             randomiser = True
+    
+    ############  Set Pruning Condition  ############
+    def set_pruning(self,ab):
+        global alphabeta
+        if ab :
+            alphabeta = True
+        else:
+            alphabeta = False
+        print("Set Pruning: -> ",alphabeta)
 
 with socketserver.TCPServer(("", PORT), CustomHandler) as httpd:
     print(f"Serving at port {PORT}")

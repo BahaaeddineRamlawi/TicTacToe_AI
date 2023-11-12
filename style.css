@@ -69,7 +69,7 @@ footer div {
 }
 
 footer p {
-  padding: 10px;
+  padding: 8px;
   padding-left: 20px;
   color: #fff;
 }
@@ -88,7 +88,7 @@ footer p {
   background: #fff;
   padding: 20px 25px 25px;
   border-radius: 5px;
-  max-width: 400px;
+  max-width: 440px;
   width: 100%;
 }
 .select-box.hide {
@@ -119,15 +119,23 @@ footer p {
 
 .difficulty button {
   font-size: 20px;
+  height: 45px;
+  margin: 5px;
+  vertical-align: middle;
   font-weight: 500;
   padding: 10px 15px;
   border: none;
-  background: rgba(244, 106, 231);
+  background: #cc6ce3;
   border-radius: 5px;
   color: #fff;
   outline: none;
   cursor: pointer;
   transition: all 0.3s ease;
+}
+
+.impossible_div {
+  display: flex;
+  flex-direction: column;
 }
 
 .options button {
@@ -156,7 +164,7 @@ footer p {
 }
 
 .difficulty button:disabled {
-  background-color: rgb(151, 55, 141);
+  background-color: #c235e5;
   transition: none;
   transform: none;
 }
@@ -321,8 +329,8 @@ footer p {
 }
 
 .review-box {
-  padding: 25px 20px;
-  border-radius: 5px;
+  padding: 15px;
+  border-radius: 10px;
   max-width: 400px;
   width: 100%;
   display: none;
@@ -332,15 +340,22 @@ footer p {
 
 .review-box p {
   font-size: 18px;
-  padding: 10px;
+  padding: 5px;
   color: #5c5cb1;
 }
 
 .review-box h3 {
   font-size: 25px;
   font-weight: bold;
-  padding: 20px;
+  padding: 15px;
   color: #5c5cb1;
+}
+
+.review-box h3 span {
+  font-size: 25px;
+  font-weight: bold;
+  padding: 15px;
+  color: #f46ae7;
 }
 
 .review-box.show {
@@ -354,7 +369,7 @@ footer p {
   font-size: 15px;
   font-weight: 500;
   padding: 8px 15px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   background: #fff;
   border-radius: 5px;
   border: solid 1px #5c5cb1;
@@ -362,4 +377,26 @@ footer p {
   outline: none;
   cursor: pointer;
   transition: all 0.3s ease;
+}
+
+#button3 {
+  width: 182px;
+}
+
+.alphabeta {
+  display: none;
+  justify-content: space-evenly;
+}
+
+.alphabeta button {
+  display: flex;
+  font-size: 12px;
+  height: 30px;
+  align-items: center;
+  text-align: center;
+  background-color: rgb(200, 110, 167);
+}
+
+.alphabeta button:disabled {
+  background-color: rgb(197, 37, 138);
 }

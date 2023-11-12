@@ -12,7 +12,9 @@ const selectBox = document.querySelector(".select-box"),
 
 let counter = 1;
 
-let difficulty = "Impossible";
+let difficulty = "Easy";
+let alphabetaprunning = false;
+let time = 0;
 
 cases = {
   1: [0, 0],
@@ -37,6 +39,8 @@ let fontsarray = [
 let playerXIcon = "X";
 let playerOIcon = "O";
 let playerSign = "X";
+let AIinitialSign = "O";
+let PlayerinitialSign = "X";
 
 window.onload = () => {
   for (let i = 0; i < allBox.length; i++) {
@@ -56,6 +60,8 @@ selectBtnO.onclick = () => {
   playBoard.classList.add("show");
   players.setAttribute("class", "players active player");
   playerSign = "O";
+  AIinitialSign = "X";
+  PlayerinitialSign = "O";
   start_game();
 };
 
@@ -83,7 +89,7 @@ function call_button_click(val, element) {
       const key = getKeyByValue(cases, [row, column]);
       setTimeout(() => {
         bot(key);
-      }, 250);
+      }, 250 - time);
       if (text !== "") {
         setTimeout(() => {
           gameEnded(text, box);
@@ -99,7 +105,16 @@ function clickedBox(element) {
   const box = element.getAttribute("class");
   const lastChar = box.charAt(box.length - 1);
   [row, column] = cases[lastChar]; // Get the row and column of the player
-  addText(counter + "- You -> row: " + row + " column: " + column, "p"); // Game review
+  addText(
+    counter +
+      "- " +
+      PlayerinitialSign +
+      " -> row: " +
+      row +
+      " column: " +
+      column,
+    "p"
+  ); // Game review
   if (players.classList.contains("player")) {
     playerSign = "O";
     element.innerHTML = `<i class="${playerOIcon}">O</i>`;
@@ -115,7 +130,10 @@ function clickedBox(element) {
 
 function bot(key) {
   if (key <= 9) {
-    addText(counter + "- AI -> row: " + row + " column: " + column, "p"); //Game Review
+    addText(
+      counter + "- " + AIinitialSign + " -> row: " + row + " column: " + column,
+      "p"
+    ); //Game Review
     playerSign = "O";
     changeStyle(`box${key}`);
     if (players.classList.contains("player")) {
@@ -175,7 +193,7 @@ function gameEnded(text, box) {
     setTimeout(() => {
       resultBox.classList.add("show");
       playBoard.classList.remove("show");
-    }, 700);
+    }, 250);
     wonText.textContent = "Match has been drawn!";
     addText("Match has been drawn!");
   }
@@ -218,7 +236,7 @@ function endingCermony(key0, key1, key2, text) {
   setTimeout(() => {
     resultBox.classList.add("show");
     playBoard.classList.remove("show");
-  }, 1000);
+  }, 900);
   wonText.innerHTML = text;
   addText(text); // Game Review
 }
@@ -230,7 +248,7 @@ function showReview() {
 
 function addText(text, type = "h3", before = true) {
   const context = document.createElement(type);
-  context.textContent = text;
+  context.innerHTML = text;
   const targetElement = document.querySelector(".review-box");
   if (before) {
     const firstChild = targetElement.querySelector(".review-box .btn");
@@ -241,6 +259,17 @@ function addText(text, type = "h3", before = true) {
 }
 
 function disablebutton(buttonNumber, diff) {
+  if (diff == "Impossible") {
+    alphabetaprunning = true;
+    time = 100;
+    document.getElementById("buttonwith").disabled = true;
+    document.getElementById("buttonwithout").disabled = false;
+    document.getElementsByClassName("alphabeta")[0].style.display = "flex";
+  } else {
+    alphabetaprunning = false;
+    time = 0;
+    document.getElementsByClassName("alphabeta")[0].style.display = "none";
+  }
   document.getElementById("button1").disabled = false;
   document.getElementById("button2").disabled = false;
   document.getElementById("button3").disabled = false;
@@ -250,16 +279,31 @@ function disablebutton(buttonNumber, diff) {
 
 function start_game() {
   let diff = difficulty;
-  addText("Difficulity is: " + diff);
-  fetch("/set_difficulity", {
+  let ab = alphabetaprunning;
+  let cond_data = { difficulty: diff, alphabeta: ab };
+  addText("Difficulty is:<span>" + diff + "</span>");
+  fetch("/set_difficulty", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ data: diff }),
+    body: JSON.stringify({ data: cond_data }),
   }).catch((error) => {
     console.error("Error sending/receiving data:", error);
   });
+}
+
+function choosewith(condition) {
+  alphabetaprunning = condition;
+  if (condition) {
+    time = 100;
+    document.getElementById("buttonwith").disabled = true;
+    document.getElementById("buttonwithout").disabled = false;
+  } else {
+    time = 0;
+    document.getElementById("buttonwith").disabled = false;
+    document.getElementById("buttonwithout").disabled = true;
+  }
 }
 
 replayBtn.onclick = () => {

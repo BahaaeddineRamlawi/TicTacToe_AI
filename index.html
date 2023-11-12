@@ -26,9 +26,15 @@
             <button class="playerO">Player (O)</button>
           </div>
           <div class="difficulty">
-            <button class="Easy" id="button1"  onclick="disablebutton(1,'Easy')">Easy</button>
+            <button class="Easy" id="button1" disabled onclick="disablebutton(1,'Easy')">Easy</button>
             <button class="Medium" id="button2" onclick="disablebutton(2,'Medium')">Medium</button>
-            <button class="Impossible" id="button3" disabled onclick="disablebutton(3,'Impossible')">Impossible</button>
+            <div class="impossible_div">
+              <button class="Impossible" id="button3" onclick="disablebutton(3,'Impossible')">Impossible</button>
+              <div class="alphabeta">
+                <button class="with" id="buttonwith" disabled onclick="choosewith(true)">With α-β </button>
+                <button class="without" id="buttonwithout"  onclick="choosewith(false)">Without α-β</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
