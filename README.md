@@ -1,8 +1,7 @@
 # TicTacToe_AI
 
-This project is a simple implementation of the classic Tic-Tac-Toe game with an AI opponent. 
-It allows users to play the game against the computer, which uses a minimax algorithm to make intelligent moves. 
-The game provides an interactive and enjoyable experience for all players.
+This project is a straightforward implementation of the classic Tic-Tac-Toe game with an AI opponent. It allows users to play against the computer, which employs a minimax algorithm for intelligent moves. Additionally, the AI supports depth-limited search and alpha-beta pruning, enhancing the capabilities of the minimax algorithm.
+The game offers an interactive and enjoyable experience for all players.
 
 ## Usage
 
@@ -23,10 +22,25 @@ Open your web browser and go to http://localhost:8080/index.html to play the gam
 
 ### Gameplay
 
-Click on the "Player X" or "Player O" button to choose your side.
-Click on the grid cells to make your move.
-The AI opponent will take its turn automatically.
-The game will announce the winner or a draw when the game ends.
-To reset the game, click the "Replay" button.
+Click on the 'Player X' or 'Player O' button to choose your side.
+Select the difficulty level:
+- Easy: The opponents make random moves.
+- Medium: The opponent follows a depth-limited search with a maximum depth of 1.
+- Impossible: Choose between using alpha-beta pruning or following the minimax algorithm.
+
+Tap on the grid cells to make your move. The AI opponent will take its turn automatically.
+The game will announce the winner or declare a draw when the game ends.
+To reset the game, click the **Replay** button.
+For a game review, select the **Review** button at the end of the game.
 
 Enjoy playing Tic-Tac-Toe against the AI and see if you can beat it!
+
+> [!IMPORTANT]
+> Hey, just a heads up: the Python server uses a specific socket port, so it's important to stop it properly before running it again. The port can't be reused unless the server is stopped..
+
+#### Credits
+
+Made by
+>Bahaaeddine Ramlawi
+Ahmad Chaachouh
+Hajar Kattaa
