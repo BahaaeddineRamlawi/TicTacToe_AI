@@ -11,7 +11,6 @@ const selectBox = document.querySelector(".select-box"),
   replayBtn2 = reviewBox.querySelector(".btn");
 
 let counter = 1;
-
 let difficulty = "Easy";
 let alphabetaprunning = false;
 let time = 0;
@@ -36,11 +35,8 @@ let fontsarray = [
   "Shadows Into Light",
 ];
 
-let playerXIcon = "X";
-let playerOIcon = "O";
-let playerSign = "X";
-let AIinitialSign = "O";
-let PlayerinitialSign = "X";
+let playerXIcon = (playerSign = PlayerinitialSign = "X");
+let playerOIcon = (AIinitialSign = "O");
 
 window.onload = () => {
   for (let i = 0; i < allBox.length; i++) {
@@ -59,9 +55,8 @@ selectBtnO.onclick = () => {
   selectBox.classList.add("hide");
   playBoard.classList.add("show");
   players.setAttribute("class", "players active player");
-  playerSign = "O";
+  playerSign = PlayerinitialSign = "O";
   AIinitialSign = "X";
-  PlayerinitialSign = "O";
   start_game();
 };
 
@@ -82,10 +77,7 @@ function call_button_click(val, element) {
   })
     .then((response) => response.json())
     .then((data) => {
-      row = data["row"];
-      column = data["column"];
-      text = data["text"];
-      box = data["box"];
+      const { row, column, text, box } = data;
       const key = getKeyByValue(cases, [row, column]);
       setTimeout(() => {
         bot(key);
@@ -179,9 +171,9 @@ function gameEnded(text, box) {
   for (let i = 0; i < allBox.length; i++) {
     allBox[i].setAttribute("onclick", "");
   }
-  b0 = box[0];
-  b1 = box[1];
-  b2 = box[2];
+  let b0 = box[0];
+  let b1 = box[1];
+  let b2 = box[2];
   const key0 = getKeyByValue(cases, [b0[0], b0[1]]);
   const key1 = getKeyByValue(cases, [b1[0], b1[1]]);
   const key2 = getKeyByValue(cases, [b2[0], b2[1]]);
@@ -223,7 +215,6 @@ function setBackgroundStyles(className) {
 }
 
 function endingCermony(key0, key1, key2, text) {
-  // Change Background color for winner and showing the result
   setTimeout(() => {
     setBackgroundStyles(`box${key0}`);
   }, 100);
@@ -260,14 +251,14 @@ function addText(text, type = "h3", before = true) {
 
 function disablebutton(buttonNumber, diff) {
   if (diff == "Impossible") {
-    alphabetaprunning = true;
     time = 100;
+    alphabetaprunning = true;
     document.getElementById("buttonwith").disabled = true;
     document.getElementById("buttonwithout").disabled = false;
     document.getElementsByClassName("alphabeta")[0].style.display = "flex";
   } else {
-    alphabetaprunning = false;
     time = 0;
+    alphabetaprunning = false;
     document.getElementsByClassName("alphabeta")[0].style.display = "none";
   }
   document.getElementById("button1").disabled = false;
@@ -308,11 +299,9 @@ function choosewith(condition) {
 
 replayBtn.onclick = () => {
   window.location.reload();
-  resetGame();
 };
 
 replayBtn2.onclick = () => {
   addText("Game is Reseting", "p", false);
   window.location.reload();
-  resetGame();
 };

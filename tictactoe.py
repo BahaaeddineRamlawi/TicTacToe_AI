@@ -196,10 +196,11 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler): #POST and GET
             post_data = self.rfile.read(content_length)
             data = json.loads(post_data.decode())
             input_data = data.get('data', '')
-            print("-----------------------------------------")
-            print("|",counter,"- You ->  ",input_data," |")  # row and column chosen by the player.
+            row, column = input_data.get('row'),input_data.get('column')
+            print("------------------------------------")
+            print("|", counter, "- You ->  row: ", row, " column: ", column, " |")  # row and column chosen by the player.
             counter += 1
-            returndata = make_move(input_data.get('row'), input_data.get('column'))
+            returndata = make_move(row, column)
             (move, text, box) = returndata
             (row, column) = move
             response_data = {
@@ -208,12 +209,13 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler): #POST and GET
                 "text": text,
                 "box": box
             }
-            if text == '' or text == 'AI won the game!':
-                print("|",counter,"- AI  ->  ", {"row":row,"column":column}," |") # row and column chosen by the AI.
-                print("-----------------------------------------")
+            if text in ('', 'AI won the game!'):
+                print("|", counter, "- AI  ->  row: ", row, " column: ", column, " |") # row and column chosen by the AI.
+                print("------------------------------------")
                 counter += 1
             else:
-                print("-----------------------------------------")
+                print("------------------------------------")
+            if text: print("\n>>  Result -> ", text, "\n")
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
             self.end_headers()
@@ -244,7 +246,7 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler): #POST and GET
         response_data = {
             "message": "Game reset successfully"
         }
-        print("Reset:  ->  ", response_data["message"])
+        print("\n>>  Reset:  ->  ", response_data["message"],"\n")
         self.send_response(200)
         self.send_header('Content-type', 'application/json')
         self.end_headers()
@@ -253,7 +255,7 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler): #POST and GET
     ############  Set Difficulty  ############
     def set_difficulty(self,diff):
         global max_depth,randomiser
-        print("Set Difficulty: -> ", diff )
+        print("\n>>  Set Difficulty: -> ", diff )
         if diff == 'Impossible':
             max_depth = 9
             randomiser = False
@@ -270,7 +272,7 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler): #POST and GET
             alphabeta = True
         else:
             alphabeta = False
-        print("Set Pruning: -> ",alphabeta)
+        print(">>  Set Pruning:    -> ",alphabeta,"\n")
 
 with socketserver.TCPServer(("", PORT), CustomHandler) as httpd:
     print(f"Serving at port {PORT}")
