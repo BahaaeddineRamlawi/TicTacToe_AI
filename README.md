@@ -20,6 +20,8 @@ python tictactoe.py
 ```
 Open your web browser and go to http://localhost:8080/index.html to play the game.
 
+Additionally, you can run the server using your preferred browser (Chrome, Edge, or Firefox) only by executing the respective script, to make it easier for you.
+
 ### Gameplay
 
 Click on the 'Player X' or 'Player O' button to choose your side.
