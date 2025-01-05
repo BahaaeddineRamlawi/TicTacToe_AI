@@ -1,6 +1,4 @@
 #Bahaaeddine RAMLAWI 210919
-#Hajar KATTAA 214082
-#Ahmad CHAACHOUH 200438
 
 import http.server
 import socketserver
@@ -19,11 +17,12 @@ alphabeta = True
 def evaluate(board):
     score = 0
     #check for wins
-    if check_winner(board)[0] == 'O':
+    var = check_winner(board)[0]
+    if var == 'O':
         score = 10
-    elif check_winner(board)[0] == 'X':
+    elif var == 'X':
         score = -10
-    elif check_winner(board)[0] == 'Tie':
+    elif var == 'Tie':
         score = 0
     # Check rows, columns, and diagonals for two in a row    
     for i in range(3):
