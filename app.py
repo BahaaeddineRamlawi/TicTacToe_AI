@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, render_template
+import os
 import random
-import json
 
 app = Flask(__name__)
 
@@ -228,5 +228,5 @@ def set_pruning():
 def index():
     return render_template('index.html')
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get("PORT", 8080)))
