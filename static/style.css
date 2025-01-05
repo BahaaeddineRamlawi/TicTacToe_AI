@@ -23,14 +23,18 @@ body {
   font-family: "Caveat";
   font-family: "Indie Flower";
   font-family: "Philosopher", sans-serif;
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+  flex-direction: column;
   width: 100%;
-  position: absolute;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 header {
   padding: 20px 0;
-  margin-bottom: 30px;
+  height: 10%;
+  width: 100%;
 }
 
 header a {
@@ -38,28 +42,31 @@ header a {
 }
 
 header img {
-  height: 100px;
-  width: 100px;
+  height: 75%;
+  aspect-ratio: 1;
   margin: 0px 50px;
 }
 
 .tictactoegame {
   display: flex;
   justify-content: center;
+  width: 100%;
+  flex: 1;
+  padding-top: 50px;
 }
 
 .select-box,
 .play-board,
 .result-box {
   transition: all 0.3s ease;
+  width: 70%;
 }
 
 .select-box {
   background: #fff;
   padding: 20px 25px 25px;
   border-radius: 5px;
-  max-width: 440px;
-  width: 100%;
+  max-height: 350px;
 }
 
 .select-box.hide {
@@ -68,14 +75,14 @@ header img {
 }
 
 .select-box top {
-  font-size: 30px;
+  font-size: 40px;
   font-weight: 600;
   padding-bottom: 10px;
   border-bottom: 1px solid lightgrey;
 }
 
 .select-box .title {
-  font-size: 22px;
+  font-size: 30px;
   font-weight: 500;
   margin: 20px 0;
 }
@@ -110,9 +117,9 @@ header img {
 
 .options button {
   width: 100%;
-  font-size: 20px;
+  font-size: 30px;
   font-weight: 500;
-  padding: 10px 0;
+  padding: 15px;
   border: none;
   background: #5c5cb1;
   border-radius: 5px;
@@ -137,12 +144,11 @@ header img {
 }
 
 .difficulty button {
-  font-size: 20px;
-  height: 45px;
+  font-size: 25px;
   margin: 5px;
-  vertical-align: middle;
+  height: 60px;
   font-weight: 500;
-  padding: 10px 15px;
+  padding: 15px 20px;
   border: none;
   background: #cc6ce3;
   border-radius: 5px;
@@ -150,21 +156,19 @@ header img {
   outline: none;
   cursor: pointer;
   transition: all 0.3s ease;
+  flex: 1;
 }
 
 .impossible_div {
   display: flex;
   flex-direction: column;
+  width: 45%;
 }
 
 .difficulty button:disabled {
   background-color: #c235e5;
   transition: none;
   transform: none;
-}
-
-#button3 {
-  width: 182px;
 }
 
 .alphabeta {
@@ -174,11 +178,12 @@ header img {
 
 .alphabeta button {
   display: flex;
-  font-size: 12px;
-  height: 30px;
+  font-size: 100%;
+  height: 40px;
   align-items: center;
   text-align: center;
   background-color: rgb(200, 110, 167);
+  justify-content: center;
 }
 
 .alphabeta button:disabled {
@@ -193,6 +198,7 @@ header img {
 .play-board.show {
   display: block;
   pointer-events: auto;
+  width: 60%;
 }
 
 .play-board .details {
@@ -272,13 +278,12 @@ header img {
 
 .play-area section span {
   display: grid;
-  height: 100px;
-  width: 100px;
+  width: 33%;
+  aspect-ratio: 1;
   margin: 2px;
   color: #5c5cb1;
-  font-size: 60px;
+  font-size: 600%;
   font-weight: bold;
-  line-height: 80px;
   text-align: center;
   border-radius: 5px;
   background: #fff;
@@ -290,6 +295,7 @@ header img {
   border-radius: 5px;
   max-width: 400px;
   width: 100%;
+  max-height: 400px;
   display: none;
   text-align: center;
   background: #fff;
@@ -302,7 +308,7 @@ header img {
 }
 
 .result-box .won-text {
-  font-size: 30px;
+  font-size: 40px;
   font-weight: 500;
   display: flex;
   justify-content: center;
@@ -314,8 +320,7 @@ header img {
 }
 
 .result-box .btn {
-  width: 100%;
-  margin-top: 25px;
+  margin: 25px;
   display: flex;
   justify-content: center;
 }
@@ -338,9 +343,9 @@ header img {
 }
 
 .review button {
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 500;
-  padding: 8px 8px;
+  padding: 10px 18px;
   background: #fff;
   border-radius: 5px;
   border: solid 1px #5c5cb1;
@@ -353,8 +358,8 @@ header img {
 .review-box {
   padding: 15px;
   border-radius: 10px;
-  max-width: 400px;
-  width: 100%;
+  width: 70%;
+  max-height: 350px;
   display: none;
   background: #fff;
   pointer-events: none;
@@ -388,22 +393,19 @@ header img {
 }
 
 .review-box button {
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 500;
-  padding: 8px 15px;
+  padding: 12px 20px;
   margin-bottom: 10px;
   background: #fff;
   border-radius: 5px;
-  border: solid 1px #5c5cb1;
+  border: solid 2px #5c5cb1;
   color: #5c5cb1;
-  outline: none;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 footer {
-  position: fixed;
-  bottom: 0;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -415,7 +417,7 @@ footer a {
 }
 
 #github {
-  font-size: 15px;
+  font-size: 20px;
 }
 
 footer div {
@@ -424,10 +426,24 @@ footer div {
   border-bottom-right-radius: 20px;
   margin-bottom: 10px;
   border-style: outset;
+  padding: 10px 50px;
 }
 
 footer p {
   padding: 8px;
+  font-size: 25px;
   padding-left: 20px;
   color: #fff;
+}
+
+@media screen and (max-width: 800px) {
+  header img {
+    height: 200px;
+    width: 200px;
+  }
+  footer p {
+    font-size: 20px;
+    padding: 20px;
+    padding-left: 40px;
+  }
 }
