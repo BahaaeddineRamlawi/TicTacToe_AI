@@ -175,7 +175,6 @@ def send_data():
     global counter
     data = request.get_json()
     row, column = data['data']['row'], data['data']['column']
-    print(f"------------------------------------\n| {counter} - You ->  row: {row}, column: {column} |")
     counter += 1
     move, text, box = make_move(row, column)
     response_data = {
@@ -185,12 +184,7 @@ def send_data():
         "box": box
     }
     if text in ('', 'AI won the game!'):
-        print(f"| {counter} - AI  ->  row: {move[0]}, column: {move[1]} |")
-        print("------------------------------------")
         counter += 1
-    else:
-        print("------------------------------------")
-    if text: print(f"\n>>  Result -> {text}\n")
     return jsonify(response_data)
 
 @app.route('/reset_game', methods=['POST'])
@@ -205,7 +199,6 @@ def set_difficulty():
     global max_depth, randomiser
     data = request.get_json()
     difficulty = data['data']['difficulty']
-    print(f"\n>>  Set Difficulty: -> {difficulty}")
     if difficulty == 'Impossible':
         max_depth = 9
         randomiser = False
@@ -221,7 +214,6 @@ def set_pruning():
     global alphabeta
     data = request.get_json()
     alphabeta = data['data']['alphabeta']
-    print(f">>  Set Pruning: -> {alphabeta}")
     return jsonify({"status": "Pruning set successfully!"})
 
 @app.route('/')
