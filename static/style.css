@@ -462,25 +462,3 @@ footer p {
     padding-left: 40px;
   }
 }
-
-@media screen and (orientation: landscape) {
-  body {
-    display: none; /* Hide the content */
-  }
-  .landscape-message {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #000;
-    color: #fff;
-    font-size: 24px;
-    text-align: center;
-  }
-}
-
-@media screen and (orientation: portrait) {
-  .landscape-message {
-    display: none;
-  }
-}
